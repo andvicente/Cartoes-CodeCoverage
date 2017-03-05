@@ -1,3 +1,5 @@
+package edu.exemplo.testesunitarios.dominio;
+
 import edu.exemplo.testesunitarios.dominio.Bandeira;
 
 import edu.exemplo.testesunitarios.dominio.Cartao;
@@ -43,7 +45,10 @@ public class CartaoTest {
 
     @Test
     public void testValidaCartaoVisa(){
+        Cartao cartao = new Cartao(Bandeira.VISA,"388835103034823");
 
+        assertFalse(cartao.validaCartaoLuhn(cartao.numero));
+        assertTrue("Esperava um cartão " + Bandeira.VISA.toString(), cartao.validaBandeira(cartao));
 
     }
 
