@@ -45,7 +45,7 @@ public class CartaoTest {
 
     @Test
     public void testValidaCartaoVisa(){
-        Cartao cartao = new Cartao(Bandeira.VISA,"388835103034823");
+        Cartao cartao = new Cartao(Bandeira.VISA,"4485767725016414");
 
         assertFalse(cartao.validaCartaoLuhn(cartao.numero));
         assertTrue("Esperava um cartão " + Bandeira.VISA.toString(), cartao.validaBandeira(cartao));
