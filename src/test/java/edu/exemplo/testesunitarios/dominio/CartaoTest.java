@@ -28,6 +28,15 @@ public class CartaoTest {
         assertEquals(cartao.calculaConta(3001.10),3031.11,0.01);
     }
 
+
+    @Test
+    public void testContaVisa(){
+        Cartao cartao = new Cartao(Bandeira.VISA);
+        assertEquals(cartao.calculaConta(100.00),105.00,0.01);
+    }
+
+
+
     @Test
     public void testContaAMEX(){
         Cartao cartao = new Cartao(Bandeira.AMEX);
@@ -41,11 +50,34 @@ public class CartaoTest {
     }
 
     @Test
-    public void testValidaCartaoVisa(){
-        Cartao cartao = new Cartao(Bandeira.VISA,"4485767725016414");
+    public void testCartaoValido(){
+        Cartao cartao = new Cartao(Bandeira.VISA,"4929481085568543");
 
         assertTrue(cartao.validaCartaoLuhn(cartao.numero));
-        assertTrue("Esperava um cartão " + Bandeira.VISA.toString(), cartao.validaBandeira(cartao));
+    }
+
+    @Test
+    public void testCartaoVisaValido(){
+        Cartao cartao = new Cartao(Bandeira.VISA,"3912345678901");
+
+        assertTrue(cartao.validaBandeira(cartao));
+    }
+
+//    @Test
+//    public void testValidaCartaoVisa(){
+//        Cartao cartao = new Cartao(Bandeira.VISA,"4485767725016414");
+//
+//        assertTrue(cartao.validaCartaoLuhn(cartao.numero));
+//        assertTrue("Esperava um cartão " + Bandeira.VISA.toString(), cartao.validaBandeira(cartao));
+//
+//    }
+
+    @Test
+    public void testValidaCartaoMaster(){
+        Cartao cartao = new Cartao(Bandeira.MASTERCARD,"5201234567890123");
+
+        //assertTrue(Cartao.validaCartaoLuhn(cartao.numero));
+        assertTrue("Esperava um cartão " + Bandeira.MASTERCARD.toString(), cartao.validaBandeira(cartao));
 
     }
 
