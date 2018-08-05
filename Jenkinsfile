@@ -2,6 +2,7 @@ node {
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
       git 'https://github.com/andvicente/Cartoes-CodeCoverage.git'
+      notifyBuild(currentBuild.result)
    }
    stage('Build') {
       // Run the maven build
@@ -14,8 +15,11 @@ node {
    }
    stage('Results') {
     junit 'build/test-results/*.xml'
-    notifyBuild(currentBuild.result)
    }
+
+    post {
+       notifyBuild(currentBuild.result)
+    }
 }
 
 def notifyBuild(String buildStatus = 'STARTED') {
