@@ -1,6 +1,9 @@
+#!/usr/bin/env groovy
+
 node {
     try{
            notifyBuild('STARTED')
+           def notifySlackGroovy = load 'notifySlack.groovy'
            stage('Preparation') { // for display purposes
               // Get some code from a GitHub repository
               git 'https://github.com/andvicente/Cartoes-CodeCoverage.git'
@@ -31,6 +34,7 @@ node {
            always {
                 // By @danielschaff
                 // https://danielschaaff.com/2018/02/09/better-jenkins-notifications-in-declarative-pipelines/
+                notifySlackGroovy.call(currentBuild.result)
                 notifySlack currentBuild.result
            }
        }
