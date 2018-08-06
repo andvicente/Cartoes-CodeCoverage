@@ -1,7 +1,8 @@
 node {
     try{
            notifyBuild('STARTED')
-           def notifySlackGroovy = load("notifySlack.groovy")
+           def notifySlackGroovy = load("./notifySlack.groovy")
+           println ${notifySlackGroovy}
            stage('Preparation') { // for display purposes
               // Get some code from a GitHub repository
               git 'https://github.com/andvicente/Cartoes-CodeCoverage.git'

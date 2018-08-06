@@ -107,4 +107,4 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins-notification
 
 }
 
-return this
+return this;
