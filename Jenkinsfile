@@ -24,7 +24,7 @@ node {
                throw e
        } finally {
                // Success or failure, always send notifications
-               def notifySlackGR = load "${rootDir}notifySlack.groovy"
+               def notifySlackGR = load "notifySlack.groovy"
                notifySlackGR.call(currentBuild.result,'#jenkins-notifications')
        }
 
