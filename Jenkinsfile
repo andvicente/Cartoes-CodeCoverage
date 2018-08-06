@@ -24,15 +24,16 @@ node {
                throw e
        } finally {
                // Success or failure, always send notifications
-               def notifySlackGR = load "notifySlack.groovy"
-               notifySlackGR.call(currentBuild.result,'#jenkins-notifications')
+               def notifySlackGroovy = load "notifySlack.groovy"
+               notifySlackGroovy.call(currentBuild.result,'#jenkins-notifications')
        }
 
        post {
            always {
                 // By @danielschaff
                 // https://danielschaaff.com/2018/02/09/better-jenkins-notifications-in-declarative-pipelines/
-                notifySlackGroovy.call(currentBuild.result)
+                def notifySlackGroovy = load "notifySlack.groovy"
+                notifySlackGroovy.call(currentBuild.result,'#jenkins-notifications')
                 notifySlack currentBuild.result
            }
        }
@@ -45,8 +46,8 @@ def notifyBuild(String buildStatus = 'STARTED') {
 
       // Default values
       def color = 'danger'
-      def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-      def summary = "${subject} (${env.BUILD_URL})"
+      def subject = "${buildStatus}: Job '${env.JOB_NAME} [#${env.BUILD_NUMBER}]'"
+      def summary = "${subject} (<${env.BUILD_URL}|Open>) (<${env.RUN_CHANGES_DISPLAY_URL}|  Changes>)"
 
       // Override default values based on build status
       if (buildStatus == 'STARTED') {
