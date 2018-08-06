@@ -1,20 +1,30 @@
 node {
-       notifyBuild('STARTED')
-       stage('Preparation') { // for display purposes
-          // Get some code from a GitHub repository
-          git 'https://github.com/andvicente/Cartoes-CodeCoverage.git'
-       }
-       stage('Build') {
-          // Run the maven build
-          if (isUnix())
-             sh "./gradlew clean build test jacocoTestReport"
+    try{
+           notifyBuild('STARTED')
+           stage('Preparation') { // for display purposes
+              // Get some code from a GitHub repository
+              git 'https://github.com/andvicente/Cartoes-CodeCoverage.git'
+           }
+           stage('Build') {
+              // Run the maven build
+              if (isUnix())
+                 sh "./gradlew clean build test jacocoTestReport"
 
-       }
-       stage('Production'){
-           input message: 'Mandar para producao?', ok: 'Sim', submitterParameter: 'aprovador'
-       }
-       stage('Results') {
-        junit 'build/test-results/*.xml'
+           }
+           stage('Production'){
+               input message: 'Mandar para producao?', ok: 'Sim', submitterParameter: 'aprovador'
+           }
+           stage('Results') {
+            junit 'build/test-results/*.xml'
+           }
+
+       } catch (e) {
+               // If there was an exception thrown, the build failed
+               currentBuild.result = "FAILED"
+               throw e
+       } finally {
+               // Success or failure, always send notifications
+               notifySlack currentBuild.result
        }
 
        post {
