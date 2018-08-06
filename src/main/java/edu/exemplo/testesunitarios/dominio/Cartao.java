@@ -70,7 +70,7 @@ public class Cartao {
         int primeiros4Caracteres = Integer.parseInt(numeroCartao.substring(0, 4));
         int primeiros6Caracteres = Integer.parseInt(numeroCartao.substring(0, 6));
 
-        Bandeira bandeira = Bandeira.valueOf(cartao.bandeira.nome().toUpperCase());
+        Bandeira bandeira = Bandeira.valueOf(cartao.bandeira.toString());
 
         switch (bandeira) {
             case VISA:
