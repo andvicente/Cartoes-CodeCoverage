@@ -24,18 +24,10 @@ node {
                throw e
        } finally {
                // Success or failure, always send notifications
+               // By @danielschaff
+               // https://danielschaaff.com/2018/02/09/better-jenkins-notifications-in-declarative-pipelines/
                def notifySlackGroovy = load "notifySlack.groovy"
                notifySlackGroovy.call(currentBuild.result,'#jenkins-notifications')
-       }
-
-       post {
-           always {
-                // By @danielschaff
-                // https://danielschaaff.com/2018/02/09/better-jenkins-notifications-in-declarative-pipelines/
-                def notifySlackGroovy = load "notifySlack.groovy"
-                notifySlackGroovy.call(currentBuild.result,'#jenkins-notifications')
-                notifySlack currentBuild.result
-           }
        }
 
 }
