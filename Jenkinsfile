@@ -27,7 +27,7 @@ node {
                throw e
        } finally {
                // Success or failure, always send notifications
-               notifySlack currentBuild.result
+               notifySlackGroovy.call(currentBuild.result)
        }
 
        post {
